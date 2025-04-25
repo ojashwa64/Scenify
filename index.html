@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: #121212;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="1-removebg-preview.png">
+    <title>Scenify - Premium Wallpapers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: white;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            background-color: #1E1E1E;
+            padding: 0 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            height: 60px;
+            width: auto;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #1DB954;
+        }
+        
+        .hero {
+            height: 70vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?ixlib=rb-1.2.1&auto=format&fit=crop&w=2110&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #1ed760;
+            transform: scale(1.05);
+        }
+        
+        .categories {
+            padding: 80px 5%;
+            text-align: center;
+        }
+        
+        .categories h2 {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .category-card {
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .category-card h3 {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+        
+        .featured {
+            padding: 80px 5%;
+            background-color: #1E1E1E;
+        }
+        
+        .featured h2 {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .wallpaper-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .wallpaper-card {
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .wallpaper-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .wallpaper-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .wallpaper-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .wallpaper-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .wallpaper-card:hover .wallpaper-info {
+            transform: translateY(0);
+        }
+        
+        .resolution-badge {
+            background-color: #1DB954;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+        
+        .download-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .download-btn {
+            flex: 1;
+            background-color: rgba(30, 30, 30, 0.9);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .download-btn:hover {
+            background-color: #1DB954;
+        }
+        
+        .download-btn i {
+            font-size: 1rem;
+        }
+        
+        .download-all {
+            background-color: #1DB954;
+            margin-top: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .download-all:hover {
+            background-color: #1ed760;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: #1E1E1E;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .modal-image {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+        }
+        
+        .modal-info {
+            padding: 20px;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(30, 30, 30, 0.7);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .modal-close:hover {
+            background-color: #ff3333;
+        }
+        
+        .modal-download-btn {
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer {
+            background-color: #1E1E1E;
+            padding: 60px 5% 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #1DB954;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #777;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .download-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <img src="Scenify-removebg-preview.png" alt="Scenify Logo" class="logo">
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Wallpapers</a>
+            <a href="#">Categories</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Elevate Your Screens</h1>
+        <p>Discover the highest quality wallpapers for your phone, tablet, and desktop. Curated collections updated weekly.</p>
+        <button class="btn">Explore Now</button>
+    </section>
+    
+    <!-- Categories Section -->
+    <section class="categories">
+        <h2>Browse Categories</h2>
+        <div class="category-grid">
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Nature">
+                <h3>Nature</h3>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94" alt="Abstract">
+                <h3>Abstract</h3>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564" alt="Space">
+                <h3>Space</h3>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083" alt="Minimal">
+                <h3>Minimal</h3>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2" alt="Cities">
+                <h3>Cities</h3>
+            </div>
+            <div class="category-card">
+                <img src="https://images.unsplash.com/photo-1508615070457-7baeba4003ab" alt="Gradient">
+                <h3>Gradient</h3>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Wallpapers -->
+    <section class="featured">
+        <h2>Featured Wallpapers</h2>
+        <div class="wallpaper-grid">
+            <div class="wallpaper-card">
+                <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0" alt="Mountain Landscape">
+                <div class="wallpaper-info">
+                    <h3>Mountain Landscape</h3>
+                    <div>
+                        <span class="resolution-badge">4K</span>
+                        <span class="resolution-badge">QHD</span>
+                        <span class="resolution-badge">FHD</span>
+                    </div>
+                    <div class="download-options">
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', '3840x2160')">
+                            <i class="fas fa-desktop"></i> 4K
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', '2560x1440')">
+                            <i class="fas fa-laptop"></i> QHD
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0', '1920x1080')">
+                            <i class="fas fa-mobile-alt"></i> FHD
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="wallpaper-card">
+                <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308" alt="Forest Path">
+                <div class="wallpaper-info">
+                    <h3>Forest Path</h3>
+                    <div>
+                        <span class="resolution-badge">4K</span>
+                        <span class="resolution-badge">QHD</span>
+                        <span class="resolution-badge">FHD</span>
+                    </div>
+                    <div class="download-options">
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1519125323398-675f0ddb6308', '3840x2160')">
+                            <i class="fas fa-desktop"></i> 4K
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1519125323398-675f0ddb6308', '2560x1440')">
+                            <i class="fas fa-laptop"></i> QHD
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1519125323398-675f0ddb6308', '1920x1080')">
+                            <i class="fas fa-mobile-alt"></i> FHD
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="wallpaper-card">
+                <img src="https://images.unsplash.com/photo-1429087969512-1e85aab2683d" alt="Ocean Sunset">
+                <div class="wallpaper-info">
+                    <h3>Ocean Sunset</h3>
+                    <div>
+                        <span class="resolution-badge">4K</span>
+                        <span class="resolution-badge">QHD</span>
+                        <span class="resolution-badge">FHD</span>
+                    </div>
+                    <div class="download-options">
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1429087969512-1e85aab2683d', '3840x2160')">
+                            <i class="fas fa-desktop"></i> 4K
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1429087969512-1e85aab2683d', '2560x1440')">
+                            <i class="fas fa-laptop"></i> QHD
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1429087969512-1e85aab2683d', '1920x1080')">
+                            <i class="fas fa-mobile-alt"></i> FHD
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="wallpaper-card">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470" alt="Lake View">
+                <div class="wallpaper-info">
+                    <h3>Lake View</h3>
+                    <div>
+                        <span class="resolution-badge">4K</span>
+                        <span class="resolution-badge">QHD</span>
+                        <span class="resolution-badge">FHD</span>
+                    </div>
+                    <div class="download-options">
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1501785888041-af3ef285b470', '3840x2160')">
+                            <i class="fas fa-desktop"></i> 4K
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1501785888041-af3ef285b470', '2560x1440')">
+                            <i class="fas fa-laptop"></i> QHD
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1501785888041-af3ef285b470', '1920x1080')">
+                            <i class="fas fa-mobile-alt"></i> FHD
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="wallpaper-card">
+                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05" alt="Misty Forest">
+                <div class="wallpaper-info">
+                    <h3>Misty Forest</h3>
+                    <div>
+                        <span class="resolution-badge">4K</span>
+                        <span class="resolution-badge">QHD</span>
+                        <span class="resolution-badge">FHD</span>
+                    </div>
+                    <div class="download-options">
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05', '3840x2160')">
+                            <i class="fas fa-desktop"></i> 4K
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05', '2560x1440')">
+                            <i class="fas fa-laptop"></i> QHD
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05', '1920x1080')">
+                            <i class="fas fa-mobile-alt"></i> FHD
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="wallpaper-card">
+                <img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d" alt="Tropical Beach">
+                <div class="wallpaper-info">
+                    <h3>Tropical Beach</h3>
+                    <div>
+                        <span class="resolution-badge">4K</span>
+                        <span class="resolution-badge">QHD</span>
+                        <span class="resolution-badge">FHD</span>
+                    </div>
+                    <div class="download-options">
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1447752875215-b2761acb3c5d', '3840x2160')">
+                            <i class="fas fa-desktop"></i> 4K
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1447752875215-b2761acb3c5d', '2560x1440')">
+                            <i class="fas fa-laptop"></i> QHD
+                        </button>
+                        <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1447752875215-b2761acb3c5d', '1920x1080')">
+                            <i class="fas fa-mobile-alt"></i> FHD
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 40px;">
+            <button class="btn download-all" onclick="showDownloadModal()">
+                <i class="fas fa-download"></i> Download All Featured Wallpapers
+            </button>
+        </div>
+    </section>
+    
+    <!-- Download Modal -->
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <img id="modalImage" class="modal-image" src="" alt="Wallpaper Preview">
+            <div class="modal-info">
+                <h2 id="modalTitle">Wallpaper Title</h2>
+                <p>Select your preferred resolution:</p>
+                <div class="download-options" style="margin-top: 15px;">
+                    <button class="download-btn" onclick="downloadCurrentWallpaper('3840x2160')">
+                        <i class="fas fa-desktop"></i> 4K (3840×2160)
+                    </button>
+                    <button class="download-btn" onclick="downloadCurrentWallpaper('2560x1440')">
+                        <i class="fas fa-laptop"></i> QHD (2560×1440)
+                    </button>
+                    <button class="download-btn" onclick="downloadCurrentWallpaper('1920x1080')">
+                        <i class="fas fa-mobile-alt"></i> FHD (1920×1080)
+                    </button>
+                </div>
+                <button class="modal-download-btn" onclick="downloadCurrentWallpaper('3840x2160')">
+                    <i class="fas fa-download"></i> Download Highest Quality
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-column">
+            <h3>Scenify</h3>
+            <p>Your premium source for high-quality wallpapers since 2023.</p>
+        </div>
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Wallpapers</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Support</h3>
+            <ul>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Connect</h3>
+            <ul>
+                <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                <li><a href="#"><i class="fab fa-pinterest"></i> Pinterest</a></li>
+                <li><a href="#"><i class="fab fa-dribbble"></i> Dribbble</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Scenify. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Current wallpaper for modal
+        let currentWallpaper = {
+            url: '',
+            title: ''
+        };
+        
+        // Function to handle wallpaper download
+        function downloadWallpaper(url, resolution) {
+            // In a real implementation, you would have different resolution versions
+            // For this demo, we'll just use the same image but pretend it's different
+            const filename = `scenify-wallpaper-${resolution}-${Date.now()}.jpg`;
+            
+            // Create a temporary anchor element
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // Track download (in a real app, you might send this to analytics)
+            console.log(`Downloaded: ${filename}`);
+            
+            // Show a fake "downloading" notification
+            alert(`Your ${resolution} wallpaper is downloading!`);
+        }
+        
+        // Function to show wallpaper in modal
+        function showWallpaperModal(url, title) {
+            currentWallpaper.url = url;
+            currentWallpaper.title = title;
+            
+            const modal = document.getElementById('downloadModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            modalImage.src = url;
+            modalTitle.textContent = title;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Function to download from modal
+        function downloadCurrentWallpaper(resolution) {
+            downloadWallpaper(currentWallpaper.url, resolution);
+            closeModal();
+        }
+        
+        // Function to close modal
+        function closeModal() {
+            const modal = document.getElementById('downloadModal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Function to show bulk download modal
+        function showDownloadModal() {
+            alert('In a full implementation, this would prepare a ZIP file with all featured wallpapers for download.');
+            // This would typically involve:
+            // 1. Server-side generation of a ZIP file
+            // 2. Providing download link
+            // 3. Possibly email delivery for large packages
+        }
+        
+        // Close modal when clicking outside content
+        window.onclick = function(event) {
+            const modal = document.getElementById('downloadModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        
+        // Add click handlers to all wallpaper cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.wallpaper-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Don't open modal if clicking on download button
+                    if (!e.target.closest('.download-btn')) {
+                        const img = card.querySelector('img');
+                        const title = card.querySelector('h3').textContent;
+                        showWallpaperModal(img.src, title);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
