@@ -32,8 +32,9 @@
         }
         
         .logo {
-            height: 60px;
-            width: auto;
+            height: 120px;
+            width: 100px;
+            padding-top: 20px;
         }
         
         .nav-links {
@@ -50,6 +51,15 @@
         
         .nav-links a:hover {
             color: #1DB954;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
         
         .hero {
@@ -241,6 +251,54 @@
             background-color: #1ed760;
         }
         
+        /* Device-specific sections */
+        .device-section {
+            padding: 80px 5%;
+            text-align: center;
+        }
+        
+        .device-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+        
+        .device-tab {
+            padding: 10px 20px;
+            background-color: #2E2E2E;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .device-tab.active {
+            background-color: #1DB954;
+        }
+        
+        .device-tab:hover {
+            background-color: #1DB954;
+        }
+        
+        .device-content {
+            display: none;
+        }
+        
+        .device-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
         /* Modal styles */
         .modal {
             display: none;
@@ -347,17 +405,75 @@
             color: #777;
         }
         
+        /* Responsive styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .category-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
             }
             
             .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background-color: #1E1E1E;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
                 gap: 15px;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
             }
             
             .download-options {
                 flex-direction: column;
+            }
+            
+            .device-tabs {
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .categories h2, .featured h2 {
+                font-size: 2rem;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .wallpaper-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -366,13 +482,16 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <img src="2-removebg-preview.png" alt="Scenify Logo" class="logo">
-        <div class="nav-links">
+        <div class="nav-links" id="navLinks">
             <a href="#">Home</a>
             <a href="#">Wallpapers</a>
             <a href="#">Categories</a>
             <a href="#">Blog</a>
             <a href="#">Contact</a>
         </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
     </nav>
     
     <!-- Hero Section -->
@@ -382,6 +501,7 @@
         <button class="btn">Explore Now</button>
     </section>
     
+   
     <!-- Categories Section -->
     <section class="categories">
         <h2>Browse Categories</h2>
@@ -430,7 +550,7 @@
                         <button class="download-btn" onclick="downloadWallpaper('./wallpaper/20ca31389e66cd404874a8533903eb12.jpg', '3840x2160')">
                             <i class="fas fa-desktop"></i> 4K
                         </button>
-                        <button class="download-btn" onclick="downloadWallpaper('', '2560x1440')">
+                        <button class="download-btn" onclick="downloadWallpaper('./wallpaper/20ca31389e66cd404874a8533903eb12.jpg', '2560x1440')">
                             <i class="fas fa-laptop"></i> QHD
                         </button>
                         <button class="download-btn" onclick="downloadWallpaper('./wallpaper/20ca31389e66cd404874a8533903eb12.jpg', '1920x1080')">
@@ -694,6 +814,51 @@
             }
         }
         
+        // Device tab switching
+        function setupDeviceTabs() {
+            const tabs = document.querySelectorAll('.device-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Get device type from data attribute
+                    const device = this.getAttribute('data-device');
+                    
+                    // Hide all content
+                    document.querySelectorAll('.device-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Show selected content
+                    document.getElementById(`${device}-wallpapers`).classList.add('active');
+                });
+            });
+        }
+        
+        // Mobile menu toggle
+        function setupMobileMenu() {
+            const menuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            
+            menuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                
+                // Change icon
+                const icon = this.querySelector('i');
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        }
+        
         // Add click handlers to all wallpaper cards
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.wallpaper-card');
@@ -707,7 +872,33 @@
                     }
                 });
             });
+            
+            // Set up device tabs
+            setupDeviceTabs();
+            
+            // Set up mobile menu
+            setupMobileMenu();
+            
+            // Detect user's device and show appropriate tab
+            detectUserDevice();
         });
+        
+        // Detect user's device and show appropriate tab
+        function detectUserDevice() {
+            const isMobile = window.matchMedia("only screen and (max-width: 760px)").matches;
+            const isTablet = window.matchMedia("only screen and (min-width: 768px) and (max-width: 1024px)").matches;
+            
+            if (isMobile) {
+                // Show phone wallpapers
+                document.querySelector('.device-tab[data-device="phone"]').click();
+            } else if (isTablet) {
+                // Show tablet wallpapers
+                document.querySelector('.device-tab[data-device="tablet"]').click();
+            } else {
+                // Show desktop wallpapers by default
+                document.querySelector('.device-tab[data-device="desktop"]').click();
+            }
+        }
     </script>
 </body>
 </html>
