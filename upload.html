@@ -1,0 +1,94 @@
+<!-- Add this section after the Featured Wallpapers section -->
+<section class="upload-section" style="padding: 80px 5%; background-color: #1E1E1E;">
+    <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Add New Wallpaper</h2>
+    
+    <div class="upload-container" style="max-width: 800px; margin: 0 auto; background-color: #2E2E2E; padding: 30px; border-radius: 10px;">
+        <form id="wallpaperUploadForm" enctype="multipart/form-data">
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="wallpaperTitle" style="display: block; margin-bottom: 8px; font-weight: 500;">Wallpaper Title</label>
+                <input type="text" id="wallpaperTitle" name="wallpaperTitle" required 
+                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; background-color: #1E1E1E; color: white;">
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="wallpaperImage" style="display: block; margin-bottom: 8px; font-weight: 500;">Wallpaper Image</label>
+                <input type="file" id="wallpaperImage" name="wallpaperImage" accept="image/*" required 
+                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; background-color: #1E1E1E; color: white;">
+                <p style="margin-top: 8px; font-size: 0.9rem; color: #aaa;">Recommended size: Minimum 3840×2160 pixels (4K)</p>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Available Resolutions</label>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="resolutions" value="4K" checked> 
+                        <span class="resolution-badge">4K (3840×2160)</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="resolutions" value="QHD" checked>
+                        <span class="resolution-badge">QHD (2560×1440)</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" name="resolutions" value="FHD" checked>
+                        <span class="resolution-badge">FHD (1920×1080)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="wallpaperCategory" style="display: block; margin-bottom: 8px; font-weight: 500;">Category</label>
+                <select id="wallpaperCategory" name="wallpaperCategory" required 
+                        style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; background-color: #1E1E1E; color: white;">
+                    <option value="">Select a category</option>
+                    <option value="nature">Nature</option>
+                    <option value="abstract">Abstract</option>
+                    <option value="space">Space</option>
+                    <option value="minimal">Minimal</option>
+                    <option value="cities">Cities</option>
+                    <option value="gradient">Gradient</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="wallpaperDescription" style="display: block; margin-bottom: 8px; font-weight: 500;">Description (Optional)</label>
+                <textarea id="wallpaperDescription" name="wallpaperDescription" rows="3"
+                          style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; background-color: #1E1E1E; color: white;"></textarea>
+            </div>
+            
+            <div style="text-align: center;">
+                <button type="submit" class="btn" style="padding: 12px 30px; background-color: #1DB954; color: white; border: none; border-radius: 30px; font-weight: bold; cursor: pointer;">
+                    <i class="fas fa-upload"></i> Upload Wallpaper
+                </button>
+            </div>
+        </form>
+        
+        <div id="uploadStatus" style="margin-top: 20px; text-align: center; display: none;"></div>
+    </div>
+</section>
+
+<!-- Add this script to handle the form submission -->
+<script>
+    document.getElementById('wallpaperUploadForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // In a real implementation, this would send the data to a server
+        // For this demo, we'll just show a success message
+        const statusElement = document.getElementById('uploadStatus');
+        statusElement.style.display = 'block';
+        statusElement.innerHTML = `
+            <div style="background-color: #1E1E1E; padding: 15px; border-radius: 5px; border-left: 4px solid #1DB954;">
+                <i class="fas fa-check-circle" style="color: #1DB954;"></i>
+                <span style="margin-left: 10px;">Wallpaper uploaded successfully! It will be reviewed before publishing.</span>
+            </div>
+        `;
+        
+        // Reset form
+        this.reset();
+        
+        // Hide status message after 5 seconds
+        setTimeout(() => {
+            statusElement.style.display = 'none';
+        }, 5000);
+    });
+</script>
