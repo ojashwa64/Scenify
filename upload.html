@@ -1,59 +1,13 @@
-<!-- Add this section after the Featured Wallpapers section -->
 <section class="upload-section" style="padding: 80px 5%; background-color: #1E1E1E;">
     <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 30px;">Add New Wallpaper</h2>
     
     <div class="upload-container" style="max-width: 800px; margin: 0 auto; background-color: #2E2E2E; padding: 30px; border-radius: 10px;">
-        <form id="wallpaperUploadForm" enctype="multipart/form-data">
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label for="wallpaperTitle" style="display: block; margin-bottom: 8px; font-weight: 500;">Wallpaper Title</label>
-                <input type="text" id="wallpaperTitle" name="wallpaperTitle" required 
-                       style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; background-color: #1E1E1E; color: white;">
-            </div>
-            
+        <form id="wallpaperUploadForm" action="upload.php" method="POST" enctype="multipart/form-data">
             <div class="form-group" style="margin-bottom: 20px;">
                 <label for="wallpaperImage" style="display: block; margin-bottom: 8px; font-weight: 500;">Wallpaper Image</label>
                 <input type="file" id="wallpaperImage" name="wallpaperImage" accept="image/*" required 
                        style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; background-color: #1E1E1E; color: white;">
                 <p style="margin-top: 8px; font-size: 0.9rem; color: #aaa;">Recommended size: Minimum 3840×2160 pixels (4K)</p>
-            </div>
-            
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Available Resolutions</label>
-                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <label style="display: flex; align-items: center; gap: 5px;">
-                        <input type="checkbox" name="resolutions" value="4K" checked> 
-                        <span class="resolution-badge">4K (3840×2160)</span>
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 5px;">
-                        <input type="checkbox" name="resolutions" value="QHD" checked>
-                        <span class="resolution-badge">QHD (2560×1440)</span>
-                    </label>
-                    <label style="display: flex; align-items: center; gap: 5px;">
-                        <input type="checkbox" name="resolutions" value="FHD" checked>
-                        <span class="resolution-badge">FHD (1920×1080)</span>
-                    </label>
-                </div>
-            </div>
-            
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label for="wallpaperCategory" style="display: block; margin-bottom: 8px; font-weight: 500;">Category</label>
-                <select id="wallpaperCategory" name="wallpaperCategory" required 
-                        style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; background-color: #1E1E1E; color: white;">
-                    <option value="">Select a category</option>
-                    <option value="nature">Nature</option>
-                    <option value="abstract">Abstract</option>
-                    <option value="space">Space</option>
-                    <option value="minimal">Minimal</option>
-                    <option value="cities">Cities</option>
-                    <option value="gradient">Gradient</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-            
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label for="wallpaperDescription" style="display: block; margin-bottom: 8px; font-weight: 500;">Description (Optional)</label>
-                <textarea id="wallpaperDescription" name="wallpaperDescription" rows="3"
-                          style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #444; background-color: #1E1E1E; color: white;"></textarea>
             </div>
             
             <div style="text-align: center;">
@@ -66,29 +20,73 @@
         <div id="uploadStatus" style="margin-top: 20px; text-align: center; display: none;"></div>
     </div>
 </section>
-
-<!-- Add this script to handle the form submission -->
 <script>
     document.getElementById('wallpaperUploadForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // In a real implementation, this would send the data to a server
-        // For this demo, we'll just show a success message
-        const statusElement = document.getElementById('uploadStatus');
-        statusElement.style.display = 'block';
+    e.preventDefault();
+    
+    const form = e.target;
+    const statusElement = document.getElementById('uploadStatus');
+    const formData = new FormData(form);
+    
+    showStatus('Uploading wallpaper...', 'info');
+    
+    fetch('upload.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showStatus(`
+                <div style="background-color: #1E1E1E; padding: 15px; border-radius: 5px; border-left: 4px solid #1DB954;">
+                    <i class="fas fa-check-circle" style="color: #1DB954;"></i>
+                    <span style="margin-left: 10px;">${data.message}</span>
+                    <div style="margin-top: 15px;">
+                        <img src="wallpapers/${data.filename}" style="max-width: 100%; max-height: 200px; border-radius: 5px;">
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <button onclick="this.parentElement.parentElement.style.display='none'" class="btn" style="padding: 8px 15px; font-size: 0.9rem;">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `, 'success');
+            form.reset();
+        } else {
+            showStatus(data.message, 'error');
+        }
+    })
+    .catch(error => {
+        showStatus('An error occurred during upload.', 'error');
+        console.error('Error:', error);
+    });
+});
+
+function showStatus(message, type) {
+    const statusElement = document.getElementById('uploadStatus');
+    statusElement.style.display = 'block';
+    
+    let icon = '';
+    let color = '#1DB954';
+    
+    if (type === 'error') {
+        icon = '<i class="fas fa-exclamation-circle" style="color: #ff3333;"></i>';
+        color = '#ff3333';
+    } else if (type === 'info') {
+        icon = '<i class="fas fa-info-circle" style="color: #1DB954;"></i>';
+    } else {
+        icon = '<i class="fas fa-check-circle" style="color: #1DB954;"></i>';
+    }
+    
+    if (type !== 'success') {
         statusElement.innerHTML = `
-            <div style="background-color: #1E1E1E; padding: 15px; border-radius: 5px; border-left: 4px solid #1DB954;">
-                <i class="fas fa-check-circle" style="color: #1DB954;"></i>
-                <span style="margin-left: 10px;">Wallpaper uploaded successfully! It will be reviewed before publishing.</span>
+            <div style="background-color: #1E1E1E; padding: 15px; border-radius: 5px; border-left: 4px solid ${color};">
+                ${icon}
+                <span style="margin-left: 10px;">${message}</span>
             </div>
         `;
-        
-        // Reset form
-        this.reset();
-        
-        // Hide status message after 5 seconds
-        setTimeout(() => {
-            statusElement.style.display = 'none';
-        }, 5000);
-    });
+    } else {
+        statusElement.innerHTML = message;
+    }
+}
 </script>
