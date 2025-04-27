@@ -146,6 +146,111 @@
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
         }
         
+        /* Pinterest-style category sections */
+        .pinterest-section {
+            padding: 60px 5%;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .section-header h2 {
+            font-size: 2rem;
+            color: #1DB954;
+        }
+        
+        .section-header a {
+            color: #1DB954;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .pinterest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-auto-rows: 10px;
+            gap: 15px;
+        }
+        
+        .pinterest-card {
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            background: #1E1E1E;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .pinterest-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .pinterest-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .pinterest-card .card-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .pinterest-card:hover .card-info {
+            opacity: 1;
+        }
+        
+        .card-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .card-info .resolution-badge {
+            background-color: #1DB954;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-right: 5px;
+        }
+        
+        .card-info .download-btn {
+            position: absolute;
+            top: -40px;
+            right: 15px;
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .pinterest-card:hover .download-btn {
+            opacity: 1;
+            transform: translateY(-10px);
+        }
+        
         .featured {
             padding: 80px 5%;
             background-color: #1E1E1E;
@@ -449,6 +554,12 @@
             .device-tabs {
                 flex-wrap: wrap;
             }
+            
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -468,7 +579,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .wallpaper-grid {
+            .wallpaper-grid, .pinterest-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -501,7 +612,6 @@
         <button class="btn">Explore Now</button>
     </section>
     
-   
     <!-- Categories Section -->
     <section class="categories">
         <h2>Browse Categories</h2>
@@ -529,6 +639,81 @@
             <div class="category-card">
                 <img src="https://images.unsplash.com/photo-1508615070457-7baeba4003ab" alt="Gradient">
                 <h3>Gradient</h3>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Trending Now Section (Pinterest-style) -->
+    <section class="pinterest-section">
+        <div class="section-header">
+            <h2>Trending Now</h2>
+            <a href="#">See all <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="pinterest-grid">
+            <div class="pinterest-card" style="grid-row-end: span 45">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Mountain Landscape">
+                <div class="card-info">
+                    <h3>Mountain Landscape</h3>
+                    <span class="resolution-badge">4K</span>
+                    <span class="resolution-badge">QHD</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1506744038136-46273834b3fb', '3840x2160')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 30">
+                <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083" alt="Minimal Design">
+                <div class="card-info">
+                    <h3>Minimal Design</h3>
+                    <span class="resolution-badge">4K</span>
+                    <span class="resolution-badge">FHD</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1511499767150-a48a237f0083', '3840x2160')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 40">
+                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564" alt="Galaxy View">
+                <div class="card-info">
+                    <h3>Galaxy View</h3>
+                    <span class="resolution-badge">5K</span>
+                    <span class="resolution-badge">4K</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1462331940025-496dfbfc7564', '5120x2880')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 35">
+                <img src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2" alt="City Skyline">
+                <div class="card-info">
+                    <h3>City Skyline</h3>
+                    <span class="resolution-badge">4K</span>
+                    <span class="resolution-badge">QHD</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2', '3840x2160')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 50">
+                <img src="https://images.unsplash.com/photo-1508615070457-7baeba4003ab" alt="Color Gradient">
+                <div class="card-info">
+                    <h3>Color Gradient</h3>
+                    <span class="resolution-badge">4K</span>
+                    <span class="resolution-badge">FHD</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1508615070457-7baeba4003ab', '3840x2160')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 25">
+                <img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94" alt="Abstract Art">
+                <div class="card-info">
+                    <h3>Abstract Art</h3>
+                    <span class="resolution-badge">4K</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1490730141103-6cac27aaab94', '3840x2160')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -625,55 +810,151 @@
                     </div>
                 </div>
             </div>
-            <div class="wallpaper-card">
-                <img src="./wallpaper/9301a5d3b1d931ebb8d763513183f4f3.jpg" alt="Misty Forest">
-                <div class="wallpaper-info">
-                    <h3>Misty Forest</h3>
-                    <div>
-                        <span class="resolution-badge">4K</span>
-                        <span class="resolution-badge">QHD</span>
-                        <span class="resolution-badge">FHD</span>
-                    </div>
-                    <div class="download-options">
-                        <button class="download-btn" onclick="downloadWallpaper('./wallpaper/9301a5d3b1d931ebb8d763513183f4f3.jpg', '3840x2160')">
-                            <i class="fas fa-desktop"></i> 4K
-                        </button>
-                        <button class="download-btn" onclick="downloadWallpaper('./wallpaper/9301a5d3b1d931ebb8d763513183f4f3.jpg', '2560x1440')">
-                            <i class="fas fa-laptop"></i> QHD
-                        </button>
-                        <button class="download-btn" onclick="downloadWallpaper('./wallpaper/9301a5d3b1d931ebb8d763513183f4f3.jpg', '1920x1080')">
-                            <i class="fas fa-mobile-alt"></i> FHD
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="wallpaper-card">
-                <img src="./wallpaper/d439bc70c1fca794dee5599bb11de389.jpg" alt="Tropical Beach">
-                <div class="wallpaper-info">
-                    <h3>Tropical Beach</h3>
-                    <div>
-                        <span class="resolution-badge">4K</span>
-                        <span class="resolution-badge">QHD</span>
-                        <span class="resolution-badge">FHD</span>
-                    </div>
-                    <div class="download-options">
-                        <button class="download-btn" onclick="downloadWallpaper('./wallpaper/d439bc70c1fca794dee5599bb11de389.jpg', '3840x2160')">
-                            <i class="fas fa-desktop"></i> 4K
-                        </button>
-                        <button class="download-btn" onclick="downloadWallpaper('./wallpaper/d439bc70c1fca794dee5599bb11de389.jpg', '2560x1440')">
-                            <i class="fas fa-laptop"></i> QHD
-                        </button>
-                        <button class="download-btn" onclick="downloadWallpaper('./wallpaper/d439bc70c1fca794dee5599bb11de389.jpg', '1920x1080')">
-                            <i class="fas fa-mobile-alt"></i> FHD
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
         <div style="text-align: center; margin-top: 40px;">
             <button class="btn download-all" onclick="showDownloadModal()">
                 <i class="fas fa-download"></i> Download All Featured Wallpapers
             </button>
+        </div>
+    </section>
+    
+    <!-- Popular Collections (Pinterest-style) -->
+    <section class="pinterest-section" style="background-color: #1E1E1E;">
+        <div class="section-header">
+            <h2>Popular Collections</h2>
+            <a href="#">View all collections <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="pinterest-grid">
+            <div class="pinterest-card" style="grid-row-end: span 50">
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Mountain Collection">
+                <div class="card-info">
+                    <h3>Mountain Collection</h3>
+                    <span class="resolution-badge">24 wallpapers</span>
+                    <button class="download-btn" onclick="showCollectionModal('Mountain Collection')">
+                        <i class="fas fa-folder-open"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 40">
+                <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083" alt="Minimal Pack">
+                <div class="card-info">
+                    <h3>Minimal Pack</h3>
+                    <span class="resolution-badge">18 wallpapers</span>
+                    <button class="download-btn" onclick="showCollectionModal('Minimal Pack')">
+                        <i class="fas fa-folder-open"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 45">
+                <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564" alt="Space Explorer">
+                <div class="card-info">
+                    <h3>Space Explorer</h3>
+                    <span class="resolution-badge">32 wallpapers</span>
+                    <button class="download-btn" onclick="showCollectionModal('Space Explorer')">
+                        <i class="fas fa-folder-open"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 35">
+                <img src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2" alt="Urban Life">
+                <div class="card-info">
+                    <h3>Urban Life</h3>
+                    <span class="resolution-badge">15 wallpapers</span>
+                    <button class="download-btn" onclick="showCollectionModal('Urban Life')">
+                        <i class="fas fa-folder-open"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 30">
+                <img src="https://images.unsplash.com/photo-1508615070457-7baeba4003ab" alt="Gradient Dreams">
+                <div class="card-info">
+                    <h3>Gradient Dreams</h3>
+                    <span class="resolution-badge">20 wallpapers</span>
+                    <button class="download-btn" onclick="showCollectionModal('Gradient Dreams')">
+                        <i class="fas fa-folder-open"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 40">
+                <img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94" alt="Abstract World">
+                <div class="card-info">
+                    <h3>Abstract World</h3>
+                    <span class="resolution-badge">25 wallpapers</span>
+                    <button class="download-btn" onclick="showCollectionModal('Abstract World')">
+                        <i class="fas fa-folder-open"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Recently Added (Pinterest-style) -->
+    <section class="pinterest-section">
+        <div class="section-header">
+            <h2>Recently Added</h2>
+            <a href="#">View all new <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="pinterest-grid">
+            <div class="pinterest-card" style="grid-row-end: span 30">
+                <img src="https://images.unsplash.com/photo-1682686580391-615b3b4af5ce" alt="Desert Sunset">
+                <div class="card-info">
+                    <h3>Desert Sunset</h3>
+                    <span class="resolution-badge">4K</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1682686580391-615b3b4af5ce', '3840x2160')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 45">
+                <img src="https://images.unsplash.com/photo-1682695796954-bad0d0f59ff1" alt="Tropical Waterfall">
+                <div class="card-info">
+                    <h3>Tropical Waterfall</h3>
+                    <span class="resolution-badge">5K</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1682695796954-bad0d0f59ff1', '5120x2880')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 35">
+                <img src="https://images.unsplash.com/photo-1682686580391-615b3b4af5ce" alt="Mountain Valley">
+                <div class="card-info">
+                    <h3>Mountain Valley</h3>
+                    <span class="resolution-badge">4K</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1682686580391-615b3b4af5ce', '3840x2160')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 40">
+                <img src="https://images.unsplash.com/photo-1682695797221-8162ff23a1e4" alt="Ocean Waves">
+                <div class="card-info">
+                    <h3>Ocean Waves</h3>
+                    <span class="resolution-badge">4K</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1682695797221-8162ff23a1e4', '3840x2160')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 25">
+                <img src="https://images.unsplash.com/photo-1682695797221-8162ff23a1e4" alt="Minimal Lines">
+                <div class="card-info">
+                    <h3>Minimal Lines</h3>
+                    <span class="resolution-badge">QHD</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1682695797221-8162ff23a1e4', '2560x1440')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="pinterest-card" style="grid-row-end: span 50">
+                <img src="https://images.unsplash.com/photo-1682686580391-615b3b4af5ce" alt="Northern Lights">
+                <div class="card-info">
+                    <h3>Northern Lights</h3>
+                    <span class="resolution-badge">5K</span>
+                    <button class="download-btn" onclick="downloadWallpaper('https://images.unsplash.com/photo-1682686580391-615b3b4af5ce', '5120x2880')">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </section>
     
@@ -698,6 +979,25 @@
                 </div>
                 <button class="modal-download-btn" onclick="downloadCurrentWallpaper('3840x2160')">
                     <i class="fas fa-download"></i> Download Highest Quality
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Collection Modal -->
+    <div id="collectionModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div class="modal-info">
+                <h2 id="collectionTitle">Collection Title</h2>
+                <p>This collection contains <span id="collectionCount">24</span> high-quality wallpapers.</p>
+                
+                <div class="wallpaper-grid" style="margin-top: 20px;">
+                    <!-- Collection items will be added here dynamically -->
+                </div>
+                
+                <button class="modal-download-btn" onclick="downloadCollection()" style="margin-top: 20px;">
+                    <i class="fas fa-download"></i> Download Entire Collection (ZIP)
                 </button>
             </div>
         </div>
@@ -748,6 +1048,44 @@
             title: ''
         };
         
+        // Current collection for modal
+        let currentCollection = {
+            name: '',
+            items: []
+        };
+        
+        // Sample collection data
+        const collections = {
+            'Mountain Collection': [
+                { url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb', title: 'Mountain View' },
+                { url: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606', title: 'Snowy Peaks' },
+                { url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b', title: 'Alpine Meadow' },
+                { url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05', title: 'Misty Mountains' }
+            ],
+            'Minimal Pack': [
+                { url: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083', title: 'Clean Lines' },
+                { url: 'https://images.unsplash.com/photo-1508615070457-7baeba4003ab', title: 'Soft Gradient' },
+                { url: 'https://images.unsplash.com/photo-1558470598-a5dda9640f68', title: 'Simple Geometry' }
+            ],
+            'Space Explorer': [
+                { url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564', title: 'Galaxy Core' },
+                { url: 'https://images.unsplash.com/photo-1454789548928-9efd52dc4031', title: 'Nebula' },
+                { url: 'https://images.unsplash.com/photo-1462332420958-a05d1e002413', title: 'Solar Flare' }
+            ],
+            'Urban Life': [
+                { url: 'https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2', title: 'City Lights' },
+                { url: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df', title: 'Metropolis' }
+            ],
+            'Gradient Dreams': [
+                { url: 'https://images.unsplash.com/photo-1508615070457-7baeba4003ab', title: 'Pastel Blend' },
+                { url: 'https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5', title: 'Sunset Hues' }
+            ],
+            'Abstract World': [
+                { url: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94', title: 'Color Splash' },
+                { url: 'https://images.unsplash.com/photo-1531326044472-232e36cec88a', title: 'Fluid Art' }
+            ]
+        };
+        
         // Function to handle wallpaper download
         function downloadWallpaper(url, resolution) {
             // In a real implementation, you would have different resolution versions
@@ -784,16 +1122,66 @@
             document.body.style.overflow = 'hidden';
         }
         
+        // Function to show collection in modal
+        function showCollectionModal(collectionName) {
+            currentCollection.name = collectionName;
+            currentCollection.items = collections[collectionName] || [];
+            
+            const modal = document.getElementById('collectionModal');
+            const collectionTitle = document.getElementById('collectionTitle');
+            const collectionCount = document.getElementById('collectionCount');
+            const wallpaperGrid = modal.querySelector('.wallpaper-grid');
+            
+            // Set collection info
+            collectionTitle.textContent = collectionName;
+            collectionCount.textContent = currentCollection.items.length;
+            
+            // Clear previous items
+            wallpaperGrid.innerHTML = '';
+            
+            // Add collection items
+            currentCollection.items.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'wallpaper-card';
+                card.style.cursor = 'pointer';
+                card.onclick = () => showWallpaperModal(item.url, item.title);
+                
+                card.innerHTML = `
+                    <img src="${item.url}" alt="${item.title}">
+                    <div class="wallpaper-info">
+                        <h3>${item.title}</h3>
+                        <div>
+                            <span class="resolution-badge">4K</span>
+                            <span class="resolution-badge">QHD</span>
+                        </div>
+                    </div>
+                `;
+                
+                wallpaperGrid.appendChild(card);
+            });
+            
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
         // Function to download from modal
         function downloadCurrentWallpaper(resolution) {
             downloadWallpaper(currentWallpaper.url, resolution);
             closeModal();
         }
         
+        // Function to download entire collection
+        function downloadCollection() {
+            alert(`Preparing to download the "${currentCollection.name}" collection (${currentCollection.items.length} wallpapers).\n\nIn a full implementation, this would generate a ZIP file for download.`);
+            closeModal();
+        }
+        
         // Function to close modal
         function closeModal() {
-            const modal = document.getElementById('downloadModal');
-            modal.style.display = 'none';
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.style.display = 'none';
+            });
             document.body.style.overflow = 'auto';
         }
         
@@ -804,14 +1192,6 @@
             // 1. Server-side generation of a ZIP file
             // 2. Providing download link
             // 3. Possibly email delivery for large packages
-        }
-        
-        // Close modal when clicking outside content
-        window.onclick = function(event) {
-            const modal = document.getElementById('downloadModal');
-            if (event.target == modal) {
-                closeModal();
-            }
         }
         
         // Device tab switching
@@ -861,11 +1241,11 @@
         
         // Add click handlers to all wallpaper cards
         document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.wallpaper-card');
+            const cards = document.querySelectorAll('.wallpaper-card, .pinterest-card');
             cards.forEach(card => {
                 card.addEventListener('click', function(e) {
-                    // Don't open modal if clicking on download button
-                    if (!e.target.closest('.download-btn')) {
+                    // Don't open modal if clicking on download button or collection folder button
+                    if (!e.target.closest('.download-btn') && !e.target.closest('.fa-folder-open')) {
                         const img = card.querySelector('img');
                         const title = card.querySelector('h3').textContent;
                         showWallpaperModal(img.src, title);
