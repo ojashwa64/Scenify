@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="1-removebg-preview.png">
+    <title>Scenify - Beautiful Wallpapers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: white;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+            background-color: #1E1E1E;
+            padding: 0 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            height: 80px;
+            width: auto;
+            transition: transform 0.3s;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:hover {
+            color: #1DB954;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #1DB954;
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .wallpaper-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 40px 5%;
+        }
+        
+        .wallpaper-card {
+            background-color: #1E1E1E;
+            border-radius: 10px;
+            overflow: hidden;
+            width: 300px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .wallpaper-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .wallpaper-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-bottom: 1px solid #333;
+        }
+        
+        .wallpaper-info {
+            padding: 15px;
+        }
+        
+        .wallpaper-info h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .resolution-badge {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .download-options {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .download-btn {
+            flex: 1;
+            background-color: #1DB954;
+            color: white;
+            border: none;
+            padding: 8px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .download-btn:hover {
+            background-color: #1ed760;
+        }
+        
+        .download-btn i {
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .wallpaper-container {
+                padding: 20px;
+            }
+            
+            .wallpaper-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <img src="2-removebg-preview.png" alt="Scenify Logo" class="logo">
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="wallpaper.html">Wallpapers</a>
+            <a href="#">Categories</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+    
+    <!-- Wallpaper Gallery -->
+    <div class="wallpaper-container">
+        <div class="wallpaper-card">
+            <img src="./wallpaper/2ad1d1cd-3f27-419d-8310-8c3c4274e72a.jpg" alt="Lake View">
+            <div class="wallpaper-info">
+                <h3>Lake View</h3>
+                <div>
+                    <span class="resolution-badge">4K</span>
+                    <span class="resolution-badge">QHD</span>
+                    <span class="resolution-badge">FHD</span>
+                </div>
+                <div class="download-options">
+                    <button class="download-btn" onclick="downloadWallpaper('./wallpaper/2ad1d1cd-3f27-419d-8310-8c3c4274e72a.jpg', '3840x2160')">
+                        <i class="fas fa-desktop"></i> 4K
+                    </button>
+                    <button class="download-btn" onclick="downloadWallpaper('./wallpaper/2ad1d1cd-3f27-419d-8310-8c3c4274e72a.jpg', '2560x1440')">
+                        <i class="fas fa-laptop"></i> QHD
+                    </button>
+                    <button class="download-btn" onclick="downloadWallpaper('./wallpaper/2ad1d1cd-3f27-419d-8310-8c3c4274e72a.jpg', '1920x1080')">
+                        <i class="fas fa-mobile-alt"></i> FHD
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="wallpaper-card">
+            <img src="./wallpaper/2cea3707c1a3a9185300eda3717d6d36.jpg" alt="Misty Forest">
+            <div class="wallpaper-info">
+                <h3>Misty Forest</h3>
+                <div>
+                    <span class="resolution-badge">4K</span>
+                    <span class="resolution-badge">QHD</span>
+                    <span class="resolution-badge">FHD</span>
+                </div>
+                <div class="download-options">
+                    <button class="download-btn" onclick="downloadWallpaper('./wallpaper/2cea3707c1a3a9185300eda3717d6d36.jpg', '3840x2160')">
+                        <i class="fas fa-desktop"></i> 4K
+                    </button>
+                    <button class="download-btn" onclick="downloadWallpaper('./wallpaper/2cea3707c1a3a9185300eda3717d6d36.jpg', '2560x1440')">
+                        <i class="fas fa-laptop"></i> QHD
+                    </button>
+                    <button class="download-btn" onclick="downloadWallpaper('./wallpaper/2cea3707c1a3a9185300eda3717d6d36.jpg', '1920x1080')">
+                        <i class="fas fa-mobile-alt"></i> FHD
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- You can add more wallpaper cards here -->
+    </div>
+    
+    <script>
+        function downloadWallpaper(url, resolution) {
+            // In a real implementation, you would have different files for different resolutions
+            // For this example, we'll just simulate the download
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `wallpaper-${resolution || 'download'}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Notification for the user
+            alert(`Downloading wallpaper in ${resolution || 'default'} resolution...`);
+        }
+    </script>
+</body>
+</html>
